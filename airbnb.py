@@ -6,13 +6,12 @@ with open('days.txt') as d:
     days = {a: idx for idx, a in enumerate(d.readlines())}
 
 
-with open('nights.txt') as mat:
+with open('mat2.txt') as mat:
     m = [[int(i.strip()) for i in line.split(' ')] for line in mat.readlines()]
 
 TOTAL = 21542
-DAYS = len(days)
-DAY_PRICE = TOTAL/DAYS
-NIGHTS = DAYS-1
+
+NIGHTS = len(days)-1
 NIGHT_PRICE = TOTAL/NIGHTS
 print(m)
 print(days.items())
