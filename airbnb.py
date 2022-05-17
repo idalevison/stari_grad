@@ -48,8 +48,8 @@ def calc_night():
 
     res = {name: math.ceil(calc_my_price(name, pricepd)) for name in traveler}
 
-    for x in res.items():
-        print(x)
+    for name, price in res.items():
+        print(f'{name} {price}')
 
     print(sum(res.values()))
     return res
