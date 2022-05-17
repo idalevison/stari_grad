@@ -53,7 +53,12 @@ def calc_night():
         print(x)
 
     print(sum(res.values()))
+    return res
 
-calc_night()
+res = calc_night()
+
+with open('airbnb_res.txt', 'w') as f:
+    for name, price in res.items():
+        f.write(f'{name} {price}\n')
 
 
