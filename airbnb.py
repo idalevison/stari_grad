@@ -22,11 +22,13 @@ def enterdays(name, arr, dep):
     for r in range(days[dep] - days[arr]):
         m[n][r] = 1
 
-def calc_ppd(peoplepd):
+def calc_ppd():
+    peoplepd = [0] * NIGHTS
     for d in range(NIGHTS):
         for n in range(len(traveler)):
             if m[n][d]:
                 peoplepd[d] += 1
+    return peoplepd
 
 
 def calc_my_price(name, pricepdb):
@@ -37,14 +39,16 @@ def calc_my_price(name, pricepdb):
             sum += pricepdb[day]
     return sum
 
-def calc_night():
-    peoplepd = [0] * NIGHTS
-    calc_ppd(peoplepd)
-    pricepd = [NIGHT_PRICE/nbrp for nbrp in peoplepd]
 
-    print(peoplepd)
-    print(pricepd)
-    print(traveler)
+peoplepd = calc_ppd()
+print(peoplepd)
+print(traveler)
+
+
+pricepd = [NIGHT_PRICE / nbrp for nbrp in peoplepd]
+print(pricepd)
+
+def calc_night(pricepd):
 
     res = {name: math.ceil(calc_my_price(name, pricepd)) for name in traveler}
 
@@ -54,8 +58,16 @@ def calc_night():
     print(sum(res.values()))
     return res
 
-res = calc_night()
+res = calc_night(pricepd)
 
+
+def calc_man_nights(peoplepd):
+    man_nights = sum(peoplepd)
+    nightp = TOTAL/man_nights
+    return [nightp] * 7
+
+print(calc_man_nights(peoplepd))
+res = calc_night(calc_man_nights(peoplepd))
 
 with open('airbnb_res.txt', 'w') as f:
     for name, price in res.items():
