@@ -13,11 +13,6 @@ TOTAL = 21542
 NIGHTS = len(days)-1
 NIGHT_PRICE = TOTAL/NIGHTS
 
-def enterdays(name, arr, dep):
-    n = traveler[name]
-    for r in range(days[dep] - days[arr]):
-        m[n][r] = 1
-
 
 def calc_people_per_day():
     peoplepd = [0] * NIGHTS
