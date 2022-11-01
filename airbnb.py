@@ -10,19 +10,16 @@ with open('mat2.txt') as mat:
     m = [[int(i.strip()) for i in line.split(' ')] for line in mat.readlines()]
 
 TOTAL = 21542
-
 NIGHTS = len(days)-1
 NIGHT_PRICE = TOTAL/NIGHTS
-print(m)
-print(days.items())
-
 
 def enterdays(name, arr, dep):
     n = traveler[name]
     for r in range(days[dep] - days[arr]):
         m[n][r] = 1
 
-def calc_ppd():
+
+def calc_people_per_day():
     peoplepd = [0] * NIGHTS
     for d in range(NIGHTS):
         for n in range(len(traveler)):
@@ -40,25 +37,14 @@ def calc_my_price(name, pricepdb):
     return sum
 
 
-peoplepd = calc_ppd()
-print(peoplepd)
-print(traveler)
-
-
-pricepd = [NIGHT_PRICE / nbrp for nbrp in peoplepd]
-print(pricepd)
-
 def calc_night(pricepd):
-
     res = {name: math.ceil(calc_my_price(name, pricepd)) for name in traveler}
 
     for name, price in res.items():
         print(f'{name} {price}')
 
-    print(sum(res.values()))
+    assert(sum(res.values()) > TOTAL)
     return res
-
-res = calc_night(pricepd)
 
 
 def calc_man_nights(peoplepd):
@@ -66,8 +52,10 @@ def calc_man_nights(peoplepd):
     nightp = TOTAL/man_nights
     return [nightp] * 7
 
-print(calc_man_nights(peoplepd))
-res = calc_night(calc_man_nights(peoplepd))
+
+people_per_day = calc_people_per_day()
+price_per_day = [NIGHT_PRICE / nbrp for nbrp in people_per_day]
+res = calc_night(calc_man_nights(people_per_day))
 
 with open('airbnb_res.txt', 'w') as f:
     for name, price in res.items():
